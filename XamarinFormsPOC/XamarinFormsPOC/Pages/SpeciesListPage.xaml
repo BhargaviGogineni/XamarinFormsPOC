@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="XamarinFormsPOC.Pages.SpeciesListPage" xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView" BackgroundColor="#dfdfdf" xmlns:converters="clr-namespace:XamarinFormsPOC.Converters" Title="{Binding PageTitle}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageConvertor x:Key="imageConvertor" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <flv:FlowListView x:Name="flowlistview" IsPullToRefreshEnabled="true" RefreshCommand="{Binding RefreshData}" IsRefreshing="{Binding isRefreshing}" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" SeparatorVisibility="Default" HasUnevenRows="True" Margin="15" BackgroundColor="#dfdfdf"
+            FlowItemsSource="{Binding SpeciesList}" FlowItemTappedCommand="{Binding SpeciesTapped}">
+            <flv:FlowListView.FlowColumnTemplate>
+                <DataTemplate>
+                    <Frame OutlineColor="#dfdfdf" Padding="10" CornerRadius="10" Margin="8" HasShadow="false">
+                        <Grid BackgroundColor="White" RowSpacing="15" ColumnSpacing="15">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding title}">
+                                <Label.Style>
+                                    <OnIdiom x:TypeArguments="Style" Phone="{StaticResource PhoneTitleStyle}" Tablet="{StaticResource TabletTitleStyle}" />
+                                </Label.Style>
+                            </Label>
+                            <Image Grid.Row="1" Grid.Column="0" Source="{Binding imageHref, Converter={StaticResource imageConvertor}}">
+                                <Image.Style>
+                                    <OnIdiom x:TypeArguments="Style" Phone="{StaticResource PhoneImageStyle}" Tablet="{StaticResource TabletImageStyle}" />
+                                </Image.Style>
+                            </Image>
+                            <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding description}">
+                                <Label.Style>
+                                    <OnIdiom x:TypeArguments="Style" Phone="{StaticResource PhoneDescriptionStyle}" Tablet="{StaticResource TabletDescriptionStyle}" />
+                                </Label.Style>
+                            </Label>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </flv:FlowListView.FlowColumnTemplate>
+        </flv:FlowListView>
+        <ActivityIndicator AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Color="Blue" IsVisible="{Binding Loadingvisible}" IsRunning="true" />
+    </AbsoluteLayout>
+</ContentPage>
